@@ -28,6 +28,9 @@
 #include "packet_monitor.h"
 #include "port_scanner.h"
 #include "totp_generator.h"
+#include "deauth_attack.h"
+#include "beacon_spam.h"
+#include "probe_sniffer.h"
 
 enum class Mode {
     MENU,
@@ -38,6 +41,9 @@ enum class Mode {
     PKT_MONITOR,
     PORT_SCAN,
     TOTP,
+    DEAUTH_ATTACK,
+    BEACON_SPAM,
+    PROBE_SNIFF,
     MODE_COUNT
 };
 
@@ -56,6 +62,9 @@ static const MenuItem menuItems[] = {
     {"Packet Monitor", packet_monitor::enter,    packet_monitor::exit,    packet_monitor::loop},
     {"Port Scanner",   port_scanner::enter,      port_scanner::exit,     port_scanner::loop},
     {"TOTP Generator", totp_generator::enter,    totp_generator::exit,   totp_generator::loop},
+    {"Deauth Attack!", deauth_attack::enter,     deauth_attack::exit,    deauth_attack::loop},
+    {"Beacon Spam!",   beacon_spam::enter,       beacon_spam::exit,      beacon_spam::loop},
+    {"Probe Sniffer",  probe_sniffer::enter,     probe_sniffer::exit,    probe_sniffer::loop},
 };
 static const int NUM_ITEMS = sizeof(menuItems) / sizeof(menuItems[0]);
 

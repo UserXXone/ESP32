@@ -9,12 +9,14 @@ No other hardware. Navigation uses the board's built-in **BOOT button**
 TOTP secrets) goes through the **USB-serial console** you already use to
 flash it.
 
-> **Use responsibly.** The scanners/detectors (WiFi, deauth, evil-twin,
-> BLE, packet monitor) are all passive/receive-only — they never transmit
-> deauth or other disruptive frames. The **port scanner actively probes
-> hosts** and must only ever be pointed at a network and devices you own
-> or are explicitly authorized to test. Scanning networks without
-> permission is illegal in most places.
+> **Use responsibly.** Modes 1–5 and 10 (WiFi scan, deauth/evil-twin/BLE
+> detectors, packet monitor, probe sniffer) are passive/receive-only —
+> they never transmit disruptive frames. Modes 6, 8 and 9 (**port
+> scanner, deauth attack, beacon spam**) are active: they probe hosts or
+> transmit real 802.11 frames. Only ever point them at a network and
+> devices **you own or are explicitly authorized to test** (pentest
+> engagement, CTF, your own lab gear). Doing this against networks you
+> don't control is illegal in most jurisdictions.
 
 ## Wiring
 
@@ -104,6 +106,18 @@ One button, three press lengths:
    serial (`totp add <label> <base32secret>`), same algorithm as Google
    Authenticator / Authy. Needs one WiFi connection on first use to fetch
    accurate time over NTP, then runs offline for the rest of the session.
+
+8. **Deauth Attack** *(active, authorized testing only)* — ESP32Marauder-
+   style: scan, pick a target AP (SHORT=next, LONG=lock target), then
+   broadcasts deauth frames to all its clients on that channel until you
+   stop it (SHORT).
+
+9. **Beacon Spam** *(active, authorized testing only)* — broadcasts fake
+   beacon frames for a rotating list of built-in SSIDs across all
+   channels, each from a random MAC. SHORT pauses/resumes.
+
+10. **Probe Sniffer** *(passive)* — logs which nearby device MACs are
+    probing for which remembered SSIDs; classic WiFi recon technique.
 
 ## Serial console
 
